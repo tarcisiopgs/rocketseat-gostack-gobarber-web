@@ -4,13 +4,13 @@ import GlobalStyle from './styles/global';
 import SignIn from './Pages/SignIn';
 import SignUp from './Pages/SignUp';
 
-import AuthContext from './contexts/AuthContext';
+import {AuthProvider} from './contexts/AuthContext';
 
 const App = () => (
   <>
-    <AuthContext.Provider value={{ name: '' }}>
+    <AuthProvider>
       <SignIn />
-    </AuthContext.Provider>
+    </AuthProvider>
     <GlobalStyle />
   </>
 );
