@@ -1,5 +1,5 @@
 import React, { useRef, useCallback } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import { FiLogIn, FiMail, FiLock } from 'react-icons/fi';
 import { FormHandles } from '@unform/core';
 import { Form } from '@unform/web';
@@ -22,6 +22,7 @@ const SignIn: React.FC = () => {
   const formRef = useRef<FormHandles>(null);
   const { signIn } = useAuth();
   const { addToast } = useToast();
+  const history = useHistory();
 
   const handleSubmit = useCallback(
     async (data: SignInFormData): Promise<void> => {
@@ -35,6 +36,7 @@ const SignIn: React.FC = () => {
         await schema.validate(data, { abortEarly: false });
 
         await signIn(data);
+        history.push('/dashboard');
       } catch (e) {
         if (e instanceof Yup.ValidationError) {
           formRef.current?.setErrors(getValidationErrors(e));
@@ -48,7 +50,7 @@ const SignIn: React.FC = () => {
         });
       }
     },
-    [addToast, signIn],
+    [addToast, signIn, history],
   );
 
   return (
